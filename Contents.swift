@@ -36,18 +36,37 @@ print("r2: \(r2)")
 // I want to create my own "object" (LSSearch) that I can init with the array,
 // then have a method on it called "Find" that takes anything that is Equatable
 // and returns an optional Int representing the index of that item if found, if not it returns nil.
-struct LSSearch {
-    var array: [Equatable]
+//struct LSSearch {
+//    var array: [Equatable]
+//   
+//    init(_ array:[Equatable]) {
+//        self.array = array
+//    }
+//    
+//    func Find(_ item: Equatable) -> Int? {
+//        for (index, object) in self.array.enumerated() where item == object {
+//            return index
+//        }
+//        
+//        return nil
+//    }
+//}
+
+// You'll need to make LSSearch a generic type like this:
+struct LSSearch<T: Equatable> {
+    var array: [T]
     
-    init(_ array:[Equatable]) {
+    init(_ array:[T]) {
         self.array = array
     }
     
-    func Find(_ item: Equatable) -> Int? {
-        for (index, object) in self.array.enumerated() where item == object {
+    func find(_ elementToFind: T) -> Int? {
+        for (index, element) in self.array.enumerated() where element == elementToFind {
             return index
         }
         
         return nil
     }
 }
+
+// When you're done with that check out the Swift standard library's implementation of `index(of:)` at https://github.com/apple/swift/blob/ca6c6b1d362cb50d9ae48fb23be68ef3e975bec5/stdlib/public/core/CollectionAlgorithms.swift.gyb#L37
