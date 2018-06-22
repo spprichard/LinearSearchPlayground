@@ -8,7 +8,7 @@ func LinearSearch<T: Equatable>(_ array:[T], _ item:T) -> Int? {
     for (index, object) in array.enumerated() where item == object {
         return index
     }
-    
+
     return nil
 }
 
@@ -30,24 +30,27 @@ guard let r2 = LinearSearch(testArray, 7) else {
 }
 print("r2: \(r2)")
 
-
-
-// So the stuff above is cool, but I want something better.
-// I want to create my own "object" (LSSearch) that I can init with the array,
-// then have a method on it called "Find" that takes anything that is Equatable
-// and returns an optional Int representing the index of that item if found, if not it returns nil.
-struct LSSearch {
-    var array: [Equatable]
+struct LSSearch<T: Equatable> {
+    var array: [T]
     
-    init(_ array:[Equatable]) {
+    init(_ array:[T]) {
         self.array = array
     }
     
-    func Find(_ item: Equatable) -> Int? {
-        for (index, object) in self.array.enumerated() where item == object {
+    func Find(_ item: T) -> Int? {
+        for (index, element) in self.array.enumerated() where item == element {
             return index
         }
         
         return nil
     }
 }
+
+let letters = ["L", "B","A", "Q","B", "G","D", "R"]
+let lsLetters = LSSearch(letters)
+lsLetters.Find("R")
+
+let numbers = [1,5,5,7,4,3,4,6,3,6,43,6,76,7,3,234,6,34,6,85,12]
+let lsNumbers = LSSearch(numbers)
+// Will return the first occurance of the number
+lsNumbers.Find(5)
